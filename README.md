@@ -17,6 +17,9 @@ See `docker-compose-multi-db.yml` for an example spanning up two instances.
 Keep in mind to extend this docker-compose.yml by an Nginx or use a local installed Nginx 
 as reverse proxy.
 
+Files such as logos for the header can go to the `./customization` folder and will be availiable in 
+all instances
+
 Development
 -----------
 To make development a bit easier there is a `docker-compose-development.yml` spanning up a
