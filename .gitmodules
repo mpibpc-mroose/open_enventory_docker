@@ -1,0 +1,3 @@
+[submodule "open_enventory"]
+	path = open_enventory
+	url = https://github.com/mpibpc-mroose/open_enventory.git

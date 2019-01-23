@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  database:
+    image: mariadb
+    container_name: db_dev
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+  openenventory:
+    build:
+      context: .
+      dockerfile: docker/openenventory
+      args:
+        xdebug: 1
+    container_name: oe_web_dev
+    environment:
+      DB_SERVER: db_dev
+      SINGLE_DB: 1
+    ports:
+      - 8888:80
+    depends_on:
+      - database
+    volumes:
+      - ./open_enventory:/var/www/html:rw
