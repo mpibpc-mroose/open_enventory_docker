@@ -1,6 +1,6 @@
 version: '3.7'
 
-x-database-defaults: &database-defaults
+x-mariadb-defaults: &mariadb-defaults
   image: mariadb
   environment:
     MYSQL_ROOT_PASSWORD: 12345678
@@ -11,8 +11,8 @@ x-openenventory-defaults: &openenventory-defaults
     dockerfile: docker/openenventory
 
 services:
-  database_1:
-    <<: *database-defaults
+  mariadb_1:
+    <<: *mariadb-defaults
     container_name: oe_db_1
   openenventory_1:
     <<: *openenventory-defaults
@@ -21,13 +21,13 @@ services:
       DB_SERVER: oe_db_1
       SINGLE_DB: 1
     ports:
-      - 8888:80
+      - 127.0.0.1:8888:80
     depends_on:
       - database_1
 
   # second instance
-  database_2:
-    <<: *database-defaults
+  mariadb_2:
+    <<: *mariadb-defaults
     container_name: oe_db_2
   openenventory_2:
     <<: *openenventory-defaults
@@ -36,7 +36,7 @@ services:
       DB_SERVER: oe_db_2
       SINGLE_DB: 1
     ports:
-      - 8889:80
+      - 127.0.0.1:8889:80
     depends_on:
       - database_2
 
