@@ -3,3 +3,4 @@ open_enventory/lib_customization.php
 customization/
 !customization/.keep
 /open_enventory
+docker.compose.yml

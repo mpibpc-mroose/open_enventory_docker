@@ -12,7 +12,7 @@ A password sync is not possible yet (see ToDo).
 
 Deployment
 ----------
-See `docker-compose-multi-db.yml` for an example spanning up two instances. 
+See `docker-compose-multi-db.yml` for an example spanning up two instances - write your own `docker-compose.yml` for your deployment. 
 
 Keep in mind to extend this docker-compose.yml by an Nginx or use a local installed Nginx 
 as reverse proxy.
