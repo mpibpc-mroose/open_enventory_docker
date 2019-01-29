@@ -1,11 +1,21 @@
 version: '3.7'
 
+networks:
+  internal:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
 x-mariadb-defaults: &mariadb-defaults
   image: mariadb
+  restart: always
+  labels:
+    - com.centurylinklabs.watchtower.enable=true
   environment:
-    MYSQL_ROOT_PASSWORD: 12345678
+    MYSQL_ROOT_PASSWORD: CHANGEME
 
-x-openenventory-defaults: &openenventory-defaults
+x-openenventory-defaults: &open_enventory-defaults
+  restart: always
   build:
     context: .
     dockerfile: docker/openenventory
@@ -13,32 +23,46 @@ x-openenventory-defaults: &openenventory-defaults
     - ./customization/:/var/www/html/customization/
 
 services:
-  mariadb_1:
+  # first instance
+  database_1:
     <<: *mariadb-defaults
-    container_name: oe_db_1
+
   openenventory_1:
-    <<: *openenventory-defaults
-    container_name: oe_web_1
+    <<: *open_enventory-defaults
     environment:
-      DB_SERVER: oe_db_1
+      # make the name of the database server available via environment
+      # variable
+      DB_SERVER: database_1
+      # hide the database name input field from the user
       SINGLE_DB: 1
     ports:
       - 127.0.0.1:8888:80
+    # pin the IP of the container to
+    # retain MySQL Grants which are based on the containers IP
+    networks:
+      internal:
+        ipv4_address: 172.20.0.22
     depends_on:
-      - mariadb_1
+      - database_1
 
-  # second instance
-  mariadb_2:
+  # another instance
+  database_2:
     <<: *mariadb-defaults
-    container_name: oe_db_2
+
   openenventory_2:
-    <<: *openenventory-defaults
-    container_name: oe_web_2
+    <<: *open_enventory-defaults
     environment:
-      DB_SERVER: oe_db_2
+      # make the name of the database server available via environment
+      # variable
+      DB_SERVER: database_2
+      # hide the database name input field from the user
       SINGLE_DB: 1
     ports:
       - 127.0.0.1:8889:80
+    # pin the IP of the container to
+    # retain MySQL Grants which are based on the containers IP
+    networks:
+      internal:
+        ipv4_address: 172.20.0.32
     depends_on:
-      - mariadb_2
-
+      - database_2
