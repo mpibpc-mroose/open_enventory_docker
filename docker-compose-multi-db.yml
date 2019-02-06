@@ -26,6 +26,11 @@ services:
   # first instance
   database_1:
     <<: *mariadb-defaults
+    networks:
+      internal:
+        ipv4_address: 172.20.0.21
+    ports:
+      - 127.0.0.1:33301:3306
 
   openenventory_1:
     <<: *open_enventory-defaults
@@ -48,7 +53,11 @@ services:
   # another instance
   database_2:
     <<: *mariadb-defaults
-
+    networks:
+      internal:
+        ipv4_address: 172.20.0.31
+    ports:
+      - 127.0.0.2:33302:3306
   openenventory_2:
     <<: *open_enventory-defaults
     environment:
