@@ -2,3 +2,4 @@
 customization/
 !customization/.keep
 docker.compose.yml
+/mysqldump/

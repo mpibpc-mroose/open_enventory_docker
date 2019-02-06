@@ -2,10 +2,14 @@ version: '3'
 
 services:
   database:
-    image: mariadb
+    build:
+      context: .
+      dockerfile: docker/mariadb
     container_name: db_dev
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
+    volumes:
+      - ./mysqldump:/mysqldump:ro
   openenventory:
     build:
       context: .
