@@ -31,6 +31,9 @@ services:
         ipv4_address: 172.20.0.21
     ports:
       - 127.0.0.1:33301:3306
+    # keep in mind to check volume for /var/lib/mysql
+    #volumes:
+    #  - ./mariadb/database_1:/var/lib/mysql:rw
 
   openenventory_1:
     <<: *open_enventory-defaults
@@ -58,6 +61,9 @@ services:
         ipv4_address: 172.20.0.31
     ports:
       - 127.0.0.2:33302:3306
+    # keep in mind to check volume for /var/lib/mysql
+    #volumes:
+    #  - ./mariadb/database_2:/var/lib/mysql:rw
   openenventory_2:
     <<: *open_enventory-defaults
     environment:
