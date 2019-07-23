@@ -2,6 +2,9 @@ FROM php:7.2-apache
 
 ARG xdebug
 
+# used in PHP code to ddetect if running in Docker
+ENV DOCKERIZE=1
+
 RUN apt-get update \
     && apt-get install -y \
         libfreetype6-dev \
