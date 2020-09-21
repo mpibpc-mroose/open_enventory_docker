@@ -4,10 +4,11 @@ networks:
   internal:
     ipam:
       config:
-        - subnet: 172.20.0.0/24
+        - subnet: 172.30.0.0/24
 
 x-mariadb-defaults: &mariadb-defaults
-  image: mariadb
+  # pin to 10.4 for compatibility
+  image: mariadb:10.4
   restart: always
   labels:
     - com.centurylinklabs.watchtower.enable=true
@@ -28,7 +29,7 @@ services:
     <<: *mariadb-defaults
     networks:
       internal:
-        ipv4_address: 172.20.0.21
+        ipv4_address: 172.30.0.21
     ports:
       - 127.0.0.1:33301:3306
     # keep in mind to check volume for /var/lib/mysql
@@ -49,7 +50,7 @@ services:
     # retain MySQL Grants which are based on the containers IP
     networks:
       internal:
-        ipv4_address: 172.20.0.22
+        ipv4_address: 172.30.0.22
     depends_on:
       - database_1
 
@@ -58,7 +59,7 @@ services:
     <<: *mariadb-defaults
     networks:
       internal:
-        ipv4_address: 172.20.0.31
+        ipv4_address: 172.30.0.31
     ports:
       - 127.0.0.2:33302:3306
     # keep in mind to check volume for /var/lib/mysql
@@ -78,6 +79,6 @@ services:
     # retain MySQL Grants which are based on the containers IP
     networks:
       internal:
-        ipv4_address: 172.20.0.32
+        ipv4_address: 172.30.0.32
     depends_on:
       - database_2
