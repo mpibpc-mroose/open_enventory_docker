@@ -2,8 +2,8 @@ FROM php:7.3-apache
 
 ARG xdebug
 
-# used in PHP code to ddetect if running in Docker
-ENV DOCKERIZE=1
+# used in PHP code to detect if running in Docker
+ENV DOCKERIZED=1
 
 RUN apt-get update \
     && apt-get install -y \
